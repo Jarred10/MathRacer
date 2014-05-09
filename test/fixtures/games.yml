@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  gameid: MyString
+  user1: MyString
+  user1progress: 1
+  user2: MyString
+  user2progress: 1
+
+two:
+  gameid: MyString
+  user1: MyString
+  user1progress: 1
+  user2: MyString
+  user2progress: 1

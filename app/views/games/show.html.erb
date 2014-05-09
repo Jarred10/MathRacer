@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Gameid:</strong>
+  <%= @game.gameid %>
+</p>
+
+<p>
+  <strong>User1:</strong>
+  <%= @game.user1 %>
+</p>
+
+<p>
+  <strong>User1progress:</strong>
+  <%= @game.user1progress %>
+</p>
+
+<p>
+  <strong>User2:</strong>
+  <%= @game.user2 %>
+</p>
+
+<p>
+  <strong>User2progress:</strong>
+  <%= @game.user2progress %>
+</p>
+
+<%= link_to 'Edit', edit_game_path(@game) %> |
+<%= link_to 'Back', games_path %>
