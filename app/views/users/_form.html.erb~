@@ -1,13 +1,10 @@
-<% if @current_user.id == @user.id %>
-<h1>Editing <%= @current_user.username %> </h1> 
-
 <%= form_for(@current_user) do |f| %>
-  <% if @current_user.errors.any? %>
+  <% if @user.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@current_user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
       <ul>
-      <% @current_user.errors.full_messages.each do |message| %>
+      <% @user.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -33,11 +30,4 @@
   <div class="actions">
     <%= f.submit %>
   </div>
-<% end %>
-
-
-<%= link_to 'Show', @current_user %> |
-<%= link_to 'Back', users_path %>
-<% else %>
-<p> Cannot edit another user's profile. You're userId: <%= @current_user.id %> and argument: <%= @user.id %>. Comparison = <%= @current_user.id == @user.id %> </p>
 <% end %>

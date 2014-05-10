@@ -39,5 +39,5 @@
 <%= link_to 'Show', @current_user %> |
 <%= link_to 'Back', users_path %>
 <% else %>
-<p> Cannot edit another user's profile. You're userId: <%= @current_user.id %> and argument: <%= @user.id %>. Comparison = <%= @current_user.id == @user.id %> </p>
+<p> Cannot edit another user's profile. You're userId: <%= @current_user.id %> and argument: <% @user.id %>. Comparison = <%= @current_user.id == @user.id %> </p>
 <% end %>

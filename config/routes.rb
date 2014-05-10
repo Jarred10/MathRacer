@@ -2,12 +2,20 @@ Rails.application.routes.draw do
   resources :games
 
   resources :users
+  
+  resources :pages
 
-  get 'pages/home'
+  get 'home', :to => 'pages#home'
 
-  get 'pages/register'
+  get 'register', :to => 'users#new'
 
-  get 'pages/play'
+  get 'play', :to => 'pages#play'
+  
+  get 'login', :to => 'pages#login'
+ 
+  post 'login' => 'pages#login_attempt', :as => :login_attempt
+  
+  get 'logout' => 'pages#logout'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

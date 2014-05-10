@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+	before_action :set_user, only: [:show, :edit, :update, :delete]
+	before_filter :save_login_state, :only => [:new, :create]
+	before_filter :authenticate_user, only: [:edit, :update, :delete]
 
   # GET /users
   # GET /users.json
@@ -28,10 +30,11 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'You sucessfully signed up.' }
-        format.json { render :show, status: :created, location: @user }
+		  flash[:notice] = 'Registration was successful.'
+        format.html { redirect_to :controller=> 'pages', :action=> 'home'}
+        format.json { render :show, status: :created, location: home }
       else
-        format.html { render :new, notice: 'Form is invalid' }
+        format.html { render home }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -42,7 +45,8 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+		  flash[:notice] = 'Update was successful.'
+        format.html { redirect_to @user}
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -69,6 +73,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:username, :password, :email)
+      params.require(:user).permit(:username, :password, :password_confirmation, :email)
     end
 end

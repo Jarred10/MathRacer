@@ -1,13 +1,14 @@
-<h1>Math Racer</h1>
-<div class="Signup_form">
-	<h1>Signup</h1>
-	<%= form_for(:user, :url => {:controller => 'users', :action => 'create'}) do |f| %>
-		<p> Username: </br> <%= f.text_field :username %> </p>
-		<p> Email: </br> <%= f.text_field :email %> </p>
-		<p> Password: </br> <%= f.password_field :password %> </p>
-		<%= f.submit :Signup %>
-	<% end %>
-</div>
+<% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+<% end %>
 
-//<%= link_to 'Users', users_path %>
-//<%= link_to 'Games', games_path %>
+<h1>Math Racer</h1>
+<% if session[:user_id].blank? %>
+	<%= link_to 'Login', action: "login" %>
+	<%= link_to 'Register', controller: "users", action: "new" %>
+	<%= link_to 'Play', action: "play" %>
+<% elsif session[:user_id].present?%>
+	<%= link_to 'Edit Profile', edit_user_path(:user_id) %>
+	<%= link_to 'Play', action: "play" %>
+	<%= link_to 'Logout', action: "logout" %>
+<% end %>
