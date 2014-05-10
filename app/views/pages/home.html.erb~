@@ -1,2 +1,2 @@
 <h1>Pages#home</h1>
-<%= link_to 'Users', Users %>
+<%= link_to 'Users', users %>
