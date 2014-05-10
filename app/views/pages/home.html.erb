@@ -1,7 +1,7 @@
 <h1>Math Racer</h1>
 <div class="Signup_form">
 	<h1>Signup></h1>
-	<% form_for(:user, :url => {:controller => 'users', :action => 'create}) do |f| %>
+	<%= form_for(:user, :url => {:controller => 'users', :action => 'create'}) do |f| %><% form_for(:user, :url => {:controller => 'users', :action => 'create}) do |f| %>
 		<p> Username: </br> <%= f.text_field :username %> </p>
 		<p> Email: </br> <%= f.text_field :email %> </p>
 		<p> Password: </br> <%= f.password_field :password %> </p>
