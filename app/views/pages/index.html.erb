@@ -1,14 +1,12 @@
-<% if flash[:notice] %>
-    <div class="notice"><%= flash[:notice] %></div>
-<% end %>
-
 <h1>Math Racer</h1>
-<% if session[:user_id].blank? %>
-	<%= link_to 'Login', action: "login" %>
+
+<%= link_to 'Users', users_path %>
+<%= link_to 'Games', games_path %>
+<% if isLoggedOut %>
+	<%= link_to 'Login', controller: "users", action: "login" %>
 	<%= link_to 'Register', controller: "users", action: "new" %>
-	<%= link_to 'Play', action: "play" %>
-<% elsif session[:user_id].present?%>
+<% else %>
 	<%= link_to 'Edit Profile', edit_user_path(session[:user_id]) %>
 	<%= link_to 'Play', action: "play" %>
-	<%= link_to 'Logout', action: "logout" %>
+	<%= link_to 'Logout', controller: "users", action: "logout" %>
 <% end %>

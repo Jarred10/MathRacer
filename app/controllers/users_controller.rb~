@@ -31,10 +31,10 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
 		  flash[:notice] = 'Registration was successful.'
-        format.html { redirect_to pages_url}
+        format.html { redirect_to pages_url }
         format.json { render :show, status: :created, location: home }
       else
-        format.html { render home }
+        format.html { render 'new' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -59,7 +59,7 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user.destroy
-    Users.logout
+    session[:user_id] = nil
     respond_to do |format|
     	flash[:notice] = 'User was successfully destroyed.'
       format.html { redirect_to pages_url }

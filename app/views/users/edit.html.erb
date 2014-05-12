@@ -1,8 +1,4 @@
-<% if @current_user.id == @user.id %>
-
-<% if flash[:notice] %>
-    <div class="notice"><%= flash[:notice] %></div>
-<% end %>
+<% if authenticate_user && @current_user.id == @user.id %>
 
 <h1>Editing <%= @current_user.username %> </h1> 
 
@@ -38,12 +34,14 @@
   <div class="actions">
     <%= f.submit %>
   </div>
-	<%= link_to 'Destroy', user_path(@current_user.id), :method => :delete%>
 <% end %>
-
 
 <%= link_to 'Show', @current_user %> |
-<%= link_to 'Back', users_path %>
+	<%= link_to 'Destroy', user_path(@current_user.id), :method => :delete%> |
+
 <% else %>
-<p> Cannot edit another user's profile. You're userId: <%= @current_user.id %> and argument: <%= @user.id %>. Comparison = <%= @current_user.id == @user.id %> </p>
+
+
+<p> Cannot edit another user's profile. </p>
 <% end %>
+<%= link_to 'Back', pages_path %>

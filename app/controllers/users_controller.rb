@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
-	before_action :set_user, only: [:show, :edit, :update, :destroy]
-	before_filter :save_login_state, :only => [:new, :create]
-	before_filter :authenticate_user, only: [:edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_filter :isLoggedOut, :only => [:new, :create]
+  before_filter :authenticate_user, only: [:edit, :update, :destroy]
 
-  # GET /users
-  # GET /users.json
+  helper_method :logout
+  
   def index
     @users = User.all
   end
@@ -30,11 +30,11 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-		  flash[:notice] = 'Registration was successful.'
+        flash[:valid] = 'Registration was successful.'
         format.html { redirect_to pages_url}
-        format.json { render :show, status: :created, location: home }
+        format.json { render :show, status: :created, location: index }
       else
-        format.html { render home }
+        format.html { render 'new' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-		  flash[:notice] = 'Update was successful.'
+        flash[:valid] = 'Update was successful.'
         format.html { redirect_to @user}
         format.json { render :show, status: :ok, location: @user }
       else
@@ -61,20 +61,39 @@ class UsersController < ApplicationController
     @user.destroy
     session[:user_id] = nil
     respond_to do |format|
-    	flash[:notice] = 'User was successfully destroyed.'
+      flash[:valid] = 'User was successfully destroyed.'
       format.html { redirect_to pages_url }
       format.json { head :no_content }
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
+  def login_attempt
+    authorized_user = User.authenticate(params[:login_username],params[:login_password])
+    if authorized_user
+      flash[:valid] = "Logged in."
+      session[:user_id] = authorized_user.id
+      redirect_to pages_url
+    else
+      flash[:invalid] = "Invalid Username or Password"
+      render "login"
     end
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user).permit(:username, :password, :password_confirmation, :email)
-    end
+  def logout
+    session[:user_id] = nil
+    redirect_to pages_url
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def user_params
+    params.require(:user).permit(:username, :password, :password_confirmation, :email)
+  end
 end
+

@@ -21,7 +21,7 @@ class PagesController < ApplicationController
   		flash[:notice] = "Logged in."
   		flash[:color] = "valid"
 		session[:user_id] = authorized_user.id
-  		redirect_to pages_path
+  		render "index"
 	else
    	flash[:notice] = "Invalid Username or Password"
    	flash[:color]= "invalid"
@@ -31,6 +31,6 @@ class PagesController < ApplicationController
   
 	def logout
   		session[:user_id] = nil
-  		redirect_to :action => 'home'
+  		render "index"
 	end
 end

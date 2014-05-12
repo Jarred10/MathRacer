@@ -12,11 +12,11 @@ Rails.application.routes.draw do
 
   get 'play', :to => 'pages#play'
   
-  get 'login', :to => 'pages#login'
+  get 'login', :to => 'users#login'
  
-  post 'login' => 'pages#login_attempt', :as => :login_attempt
+  post 'login' => 'users#login_attempt', :as => :login_attempt
   
-  get 'logout' => 'pages#logout'
+  get 'logout' => 'users#logout'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
