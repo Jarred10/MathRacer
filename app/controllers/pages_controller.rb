@@ -1,9 +1,9 @@
 class PagesController < ApplicationController
 
-	before_filter :authenticate_user, :only => [:play, :logout]
+	before_filter :authenticate_user, :only => [:logout]
 	before_filter :save_login_state, :only => [:login, :login_attempt, :register]
 
-  def home
+  def index
   end
 
   def register
@@ -21,7 +21,7 @@ class PagesController < ApplicationController
   		flash[:notice] = "Logged in."
   		flash[:color] = "valid"
 		session[:user_id] = authorized_user.id
-  		redirect_to(:action => 'home')
+  		redirect_to pages_path
 	else
    	flash[:notice] = "Invalid Username or Password"
    	flash[:color]= "invalid"
@@ -31,6 +31,6 @@ class PagesController < ApplicationController
   
 	def logout
   		session[:user_id] = nil
-  		redirect_to :action => 'home'
+  		redirect_to pages_url
 	end
 end

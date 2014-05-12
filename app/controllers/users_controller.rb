@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-	before_action :set_user, only: [:show, :edit, :update, :delete]
+	before_action :set_user, only: [:show, :edit, :update, :destroy]
 	before_filter :save_login_state, :only => [:new, :create]
-	before_filter :authenticate_user, only: [:edit, :update, :delete]
+	before_filter :authenticate_user, only: [:edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
 		  flash[:notice] = 'Registration was successful.'
-        format.html { redirect_to :controller=> 'pages', :action=> 'home'}
+        format.html { redirect_to pages_url}
         format.json { render :show, status: :created, location: home }
       else
         format.html { render home }
@@ -59,8 +59,10 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user.destroy
+    session[:user_id] = nil
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+    	flash[:notice] = 'User was successfully destroyed.'
+      format.html { redirect_to pages_url }
       format.json { head :no_content }
     end
   end

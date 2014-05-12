@@ -1,4 +1,9 @@
 <% if @current_user.id == @user.id %>
+
+<% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+<% end %>
+
 <h1>Editing <%= @current_user.username %> </h1> 
 
 <%= form_for(@current_user) do |f| %>
@@ -33,6 +38,7 @@
   <div class="actions">
     <%= f.submit %>
   </div>
+	<%= link_to 'Destroy', user_path(@current_user), :method => :delete%>
 <% end %>
 
 

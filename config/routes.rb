@@ -4,8 +4,9 @@ Rails.application.routes.draw do
   resources :users
   
   resources :pages
+  
 
-  get 'home', :to => 'pages#home'
+  get 'index', :to => 'pages#index'
 
   get 'register', :to => 'users#new'
 
@@ -21,7 +22,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'pages#home'
+  root 'pages#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
