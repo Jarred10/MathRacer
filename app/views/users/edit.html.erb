@@ -36,6 +36,7 @@
 <% end %>
 
 
+<%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %>
 <%= link_to 'Show', @current_user %> |
 <%= link_to 'Back', users_path %>
 <% else %>
