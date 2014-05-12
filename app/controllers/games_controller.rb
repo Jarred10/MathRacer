@@ -1,10 +1,12 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show, :edit, :update, :destroy]
+  before_action :set_game, only: [:show, :edit, :update, :destroy, :join]
+  before_action :authenticate_user, before: :all
 
   # GET /games
   # GET /games.json
   def index
-    @games = Game.all
+    @opengames = Game.where(:user2 => [nil,0,""])
+    @pending_games = Game.where(:user1progress => [nil,0,""], :user2progress => [nil,0,""])
   end
 
   # GET /games/1
@@ -41,7 +43,7 @@ class GamesController < ApplicationController
   # PATCH/PUT /games/1.json
   def update
     respond_to do |format|
-      if @game.update(game_params)
+      if @game.update
         format.html { redirect_to @game, notice: 'Game was successfully updated.' }
         format.json { render :show, status: :ok, location: @game }
       else
@@ -59,6 +61,12 @@ class GamesController < ApplicationController
       format.html { redirect_to games_url, notice: 'Game was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+  
+  def join
+    @game.user2 = @current_user.username
+    @game.save
+    redirect_to games_url
   end
 
   private

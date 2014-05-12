@@ -1,4 +1,10 @@
 <h1>Race Page</h1>
-<%= @games.each do |game|%>
-<%= game.gameid%>
+<% if authenticate_user %>
+	<p>Current games:</p>
+	<% @games.each do |game| %>
+	<%= game.gameid %>
+	<%end%>
+<% else %>
+<P>Please log in to play.</P>
 <%end%>
+<%= link_to 'Back', pages_path %>

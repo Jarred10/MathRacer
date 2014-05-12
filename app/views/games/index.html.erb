@@ -1,31 +1,19 @@
-<h1>Listing games</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Gameid</th>
-      <th>User1</th>
-      <th>User1progress</th>
-      <th>User2</th>
-      <th>User2progress</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @games.each do |game| %>
-      <tr>
-        <td><%= game.gameid %></td>
-        <td><%= game.user1 %></td>
-        <td><%= game.user1progress %></td>
-        <td><%= game.user2 %></td>
-        <td><%= game.user2progress %></td>
-        <td><%= link_to 'Show', game %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<h1>Race Page</h1>
+<% if authenticate_user %>
+	<p>Current games:</p>
+	<% @opengames.each do |game| %>
+	<p>Game: <%= game.gameid %> User1: <%= game.user1 %> User2: <%= game.user2%>
+		<%= button_to 'Join Game', :action => :join, :id => game.id %> </p>
+	<%end%>
+	<p>Pending games:</p>
+	<% @pending_games.each do |game| %>
+	<p>Game: <%= game.gameid %> User1: <%= game.user1 %> User2: <%= game.user2%> </p>
+	<% end %>
+<% else %>
+<P>Please log in to play.</P>
+<%end%>
 <br>
+<%= link_to 'New Game', new_game_path %> | 
+<%= link_to 'Back', pages_path %>
 
-<%= link_to 'New Game', new_game_path %>
+

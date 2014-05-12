@@ -7,6 +7,6 @@
 	<%= link_to 'Register', controller: "users", action: "new" %>
 <% else %>
 	<%= link_to 'Edit Profile', edit_user_path(session[:user_id]) %>
-	<%= link_to 'Play', action: "play" %>
+	<%= link_to 'Play', games_path %>
 	<%= link_to 'Logout', controller: "users", action: "logout" %>
 <% end %>

@@ -10,7 +10,9 @@ Rails.application.routes.draw do
 
   get 'register', :to => 'users#new'
 
-  get 'play', :to => 'pages#play'
+  get 'play', :to => 'games#index'
+  
+  post 'games/join' => 'games#join', :as => :join
   
   get 'login', :to => 'users#login'
  
