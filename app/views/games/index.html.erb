@@ -1,16 +1,18 @@
 <h1>Race Page</h1>
 <% if authenticate_user %>
-	<p>Current games:</p>
-	<% @opengames.each do |game| %>
-	<p>Game: <%= game.gameid %> User1: <%= game.user1 %> User2: <%= game.user2%>
-		<%= button_to 'Join Game', :action => :join, :id => game.id %> </p>
-	<%end%>
-	<p>Pending games:</p>
-	<% @pending_games.each do |game| %>
-	<p>Game: <%= game.gameid %> User1: <%= game.user1 %> User2: <%= game.user2%> </p>
+	<% if in_game %>
+		<p> ingame <%= @current_game %> </p>
+			<%= button_to 'Leave Game', :action => :leave, :id => session[:game_id] %> </p>
+		
+	<% else %>
+		<p>Open games:</p>
+		<% @opengames.each do |game| %>
+			<p>Game: <%= game.gameid %> User1: <%= game.user1 %> User2: <%= game.user2%>
+			<%= button_to 'Join Game', :action => :join, :id => game.id %> </p>
+		<%end%>
 	<% end %>
 <% else %>
-<P>Please log in to play.</P>
+	<P>Please log in to play.</P>
 <%end%>
 <br>
 <%= link_to 'New Game', new_game_path %> | 

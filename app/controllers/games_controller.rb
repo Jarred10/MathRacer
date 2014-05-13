@@ -1,12 +1,11 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show, :edit, :update, :destroy, :join]
+  before_action :set_game, only: [:show, :edit, :update, :destroy, :join, :leave]
   before_action :authenticate_user, before: :all
 
   # GET /games
   # GET /games.json
   def index
     @opengames = Game.where(:user2 => [nil,0,""])
-    @pending_games = Game.where(:user1progress => [nil,0,""], :user2progress => [nil,0,""])
   end
 
   # GET /games/1
@@ -64,9 +63,20 @@ class GamesController < ApplicationController
   end
   
   def join
+    session[:game_id] = @game.id
     @game.user2 = @current_user.username
     @game.save
+    @current_game = @game
     redirect_to games_url
+  end
+  
+  def leave
+    session[:game_id] = nil
+    @game.user2 = nil;
+    @game.save
+    @current_game = nil
+    redirect_to games_url
+    
   end
 
   private

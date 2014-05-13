@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   
   post 'games/join' => 'games#join', :as => :join
   
+  post 'games/leave' => 'games#leave', :as => :leave
+  
   get 'login', :to => 'users#login'
  
   post 'login' => 'users#login_attempt', :as => :login_attempt

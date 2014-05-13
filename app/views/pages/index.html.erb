@@ -2,7 +2,7 @@
 
 <%= link_to 'Users', users_path %>
 <%= link_to 'Games', games_path %>
-<% if isLoggedOut %>
+<% if logged_out %>
 	<%= link_to 'Login', controller: "users", action: "login" %>
 	<%= link_to 'Register', controller: "users", action: "new" %>
 <% else %>
