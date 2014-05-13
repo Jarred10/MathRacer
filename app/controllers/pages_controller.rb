@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
 
 	before_filter :authenticate_user, :only => [:play]
-	before_filter :isLoggedOut, :only => [:login, :register]
+	before_filter :logged_out, :only => [:login, :register]
 
   def index
   end

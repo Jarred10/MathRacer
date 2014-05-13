@@ -1,21 +1,26 @@
 <h1>Race Page</h1>
 <% if authenticate_user %>
-	<% if in_game %>
-		<p> ingame <%= @current_game %> </p>
+	<% if in_game %>	
+		<% if in_full_game %>
+			<div class="game"> <%= render :partial => 'index', :locals => { :id => session[:game_id] } %> </div>
+		<% else %>
+		<p> ingame <%= @current_game.gameid %> </p>
 			<%= button_to 'Leave Game', :action => :leave, :id => session[:game_id] %> </p>
-		
+		<% end %>
 	<% else %>
 		<p>Open games:</p>
 		<% @opengames.each do |game| %>
 			<p>Game: <%= game.gameid %> User1: <%= game.user1 %> User2: <%= game.user2%>
 			<%= button_to 'Join Game', :action => :join, :id => game.id %> </p>
+			
+			
+			
+<br>| <%= link_to 'New Game', new_game_path %> 
 		<%end%>
 	<% end %>
 <% else %>
 	<P>Please log in to play.</P>
 <%end%>
-<br>
-<%= link_to 'New Game', new_game_path %> | 
 <%= link_to 'Back', pages_path %>
 
 

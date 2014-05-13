@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show, :edit, :update, :destroy, :join, :leave]
+  before_action :set_game, only: [:_show, :show, :edit, :update, :destroy, :join, :leave]
   before_action :authenticate_user, before: :all
+  before_action :in_game, before: :all
 
   # GET /games
   # GET /games.json
@@ -26,9 +27,11 @@ class GamesController < ApplicationController
   # POST /games.json
   def create
     @game = Game.new(game_params)
+	@game.user1 = @current_user.username
 
     respond_to do |format|
       if @game.save
+		session[:game_id] = @game.id
         format.html { redirect_to @game, notice: 'Game was successfully created.' }
         format.json { render :show, status: :created, location: @game }
       else

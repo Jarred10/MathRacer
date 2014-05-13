@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_filter :isLoggedOut, :only => [:new, :create]
+  before_filter :logged_out, :only => [:new, :create]
   before_filter :authenticate_user, only: [:edit, :update, :destroy]
 
   helper_method :logout

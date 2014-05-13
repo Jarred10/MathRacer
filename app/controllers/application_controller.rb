@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :logged_out
   helper_method :authenticate_user
   helper_method :in_game
+  helper_method :in_full_game
   
   def authenticate_user
   		if session[:user_id]
@@ -27,9 +28,14 @@ class ApplicationController < ActionController::Base
   
   def in_game
     if session[:game_id]
+		@current_game = Game.find(session[:game_id])
       return true
     else
       return false
     end
+  end
+  
+  def in_full_game
+    return in_game && @current_game.user2 != nil
   end
 end
