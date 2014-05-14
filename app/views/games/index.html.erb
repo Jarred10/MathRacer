@@ -9,7 +9,7 @@
 			
 			<%= form_tag(:action => 'submit_answer') do %>
 			
-			<%= @f %> * <%= @s %>
+				<%= @f %> * <%= @s %>
 				<%= hidden_field_tag :f, @f %>
 				<%= hidden_field_tag :s, @s %>
 				<p>Answer:</br> <%= text_field_tag :answer %></p> 
@@ -17,7 +17,11 @@
 			<% end %>
 						
 			<%= button_to 'Leave Game', :action => :leave, :id => session[:game_id] %> </p>
+		<% else %>
+		Current Game: <%= @current_game.gameid %>
+		<%= button_to 'Leave Game', :action => :leave, :id => session[:game_id] %>
 		<% end %>
+		
 	<% else %>
 		<p>Open games:</p>
 		<% @opengames.each do |game| %>

@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:_show, :show, :edit, :update, :destroy, :join, :leave]
+  before_action :set_game, only: [:show, :edit, :update, :destroy, :join, :leave]
   before_action :authenticate_user, before: :all
   before_action :in_game, before: :all
   before_action :generateQuestion, before: :index
@@ -9,7 +9,7 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.json
   def index
-    @opengames = Game.where(:user2 => [nil])
+    @opengames = Game.where(:user2 => nil)
   end
 
   # GET /games/1
@@ -73,20 +73,27 @@ class GamesController < ApplicationController
   end
  
   def join
+	if(@game.user1 == nil)
+    session[:game_id] = @game.id
+    @game.user1 = @current_user.username
+    @game.save
+    @current_game = @game
+	elsif(@game.user2 == nil)
+	
     session[:game_id] = @game.id
     @game.user2 = @current_user.username
     @game.save
     @current_game = @game
+	else
+	flash[:invalid] = 'Game full!'
+	end
     redirect_to games_url
   end
   
   def leave
+	@game.destroy
     session[:game_id] = nil
-    @game.user2 = nil;
-    @game.save
-    @current_game = nil
     redirect_to games_url
-    
   end
   
   def generateQuestion
@@ -95,13 +102,26 @@ class GamesController < ApplicationController
   end
   
   def submit_answer
-	if params[:answer].to_f == params[:f].to_f * params[:s].to_f
+	if(@current_game.user1progress == 10)
+	
+		flash[:valid] = @current_game.user1 + " won!"
+		@current_game.destroy
+	elsif (@current_game.user2progress == 10)
+	
+		flash[:valid] = @current_game.user2 + " won!"
+		@current_game.destroy
+	elsif params[:answer].to_f == params[:f].to_f * params[:s].to_f
 		if(@current_user.username == @current_game.user1)
-			@current_game.user1progress += 1
+			@current_game.user1progress = @current_game.user1progress + 1
 		else
-			@current_game.user2progress += 1
+			@current_game.user2progress = @current_game.user2progress + 1
 		end
 		@current_game.save
+		flash[:valid] = "Correct Answer!"
+	
+	else
+	
+		flash[:invalid] = "Incorrect Answer!"
 	
 	end
 	

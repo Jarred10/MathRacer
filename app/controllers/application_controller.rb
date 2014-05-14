@@ -28,10 +28,13 @@ class ApplicationController < ActionController::Base
   
   def in_game
     if session[:game_id]
-		@current_game = Game.find(session[:game_id])
-      return true
-    else
-      return false
+		if (Game.exists?(session[:game_id]))
+			@current_game = Game.find(session[:game_id])
+			return true
+		else
+			session[:game_id] = nil
+			return false
+		end
     end
   end
   
