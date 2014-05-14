@@ -9,7 +9,7 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.json
   def index
-    @opengames = Game.where(:user2 => [nil,0,""])
+    @opengames = Game.where(:user2 => [nil])
   end
 
   # GET /games/1
