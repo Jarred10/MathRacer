@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
   get 'play', :to => 'games#index'
   
+  post 'games/submit_answer' => 'games#submit_answer', :as => :submit_answer
+  
   post 'games/join' => 'games#join', :as => :join
   
   post 'games/leave' => 'games#leave', :as => :leave
@@ -22,7 +24,6 @@ Rails.application.routes.draw do
   
   get 'logout' => 'users#logout'
   
-  get 'show' => 'games#show', :as => :id
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -31,7 +32,7 @@ Rails.application.routes.draw do
   root 'pages#index'
 
   # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
+  #   get 'games/:id' => 'games#show'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

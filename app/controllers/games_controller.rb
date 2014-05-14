@@ -2,7 +2,10 @@ class GamesController < ApplicationController
   before_action :set_game, only: [:_show, :show, :edit, :update, :destroy, :join, :leave]
   before_action :authenticate_user, before: :all
   before_action :in_game, before: :all
+  before_action :generateQuestion, before: :index
 
+  helper_method :submit_answer
+  
   # GET /games
   # GET /games.json
   def index
@@ -28,10 +31,14 @@ class GamesController < ApplicationController
   def create
     @game = Game.new(game_params)
 	@game.user1 = @current_user.username
+	
+	@game.user1progress = 0
+	@game.user2progress = 0
 
     respond_to do |format|
       if @game.save
 		session[:game_id] = @game.id
+		
         format.html { redirect_to @game, notice: 'Game was successfully created.' }
         format.json { render :show, status: :created, location: @game }
       else
@@ -64,7 +71,7 @@ class GamesController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+ 
   def join
     session[:game_id] = @game.id
     @game.user2 = @current_user.username
@@ -80,6 +87,23 @@ class GamesController < ApplicationController
     @current_game = nil
     redirect_to games_url
     
+  end
+  
+  def generateQuestion
+  @f = rand(10)
+  @s = rand(10)
+  end
+  
+  def submit_answer
+	if params[:answer].to_f == params[:f].to_f * params[:s].to_f
+		@current_game.user1progress = @current_game.user1progress + 1
+		@current_game.save
+	end
+	
+	flash[:valid] = params[:s]
+	render :index
+  
+  
   end
 
   private

@@ -2,9 +2,20 @@
 <% if authenticate_user %>
 	<% if in_game %>	
 		<% if in_full_game %>
-			<div class="game"> <%= render :partial => 'index', :locals => { :id => session[:game_id] } %> </div>
-		<% else %>
-		<p> ingame <%= @current_game.gameid %> </p>
+			<div class="game"> <%= render partial: 'show' %> </div>
+			
+			
+			<!--ajax call-->
+			
+			<%= form_tag(:action => 'submit_answer') do %>
+			
+			<%= @f %> * <%= @s %>
+				<%= hidden_field_tag :f, @f %>
+				<%= hidden_field_tag :s, @s %>
+				<p>Answer:</br> <%= text_field_tag :answer %></p> 
+				<%= submit_tag("Submit") %>
+			<% end %>
+						
 			<%= button_to 'Leave Game', :action => :leave, :id => session[:game_id] %> </p>
 		<% end %>
 	<% else %>
@@ -15,8 +26,9 @@
 			
 			
 			
-<br>| <%= link_to 'New Game', new_game_path %> 
 		<%end%>
+		
+<%= link_to 'New Game', new_game_path %>  | 
 	<% end %>
 <% else %>
 	<P>Please log in to play.</P>
