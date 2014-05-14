@@ -96,12 +96,18 @@ class GamesController < ApplicationController
   
   def submit_answer
 	if params[:answer].to_f == params[:f].to_f * params[:s].to_f
-		@current_game.user1progress = @current_game.user1progress + 1
+		if(@current_user.username == @current_game.user1)
+			@current_game.user1progress += 1
+		else
+			@current_game.user2progress += 1
+		end
 		@current_game.save
+	
 	end
 	
-	flash[:valid] = params[:s]
-	render :index
+		redirect_to games_path
+	
+	
   
   
   end
