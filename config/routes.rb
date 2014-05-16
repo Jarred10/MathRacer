@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   
   resources :pages
   
-# maps http requests to the corresponding methods
+# Maps http requests to the corresponding methods
   get 'index', :to => 'pages#index'
 
   get 'register', :to => 'users#new'

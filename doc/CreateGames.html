@@ -88,6 +88,8 @@
 
   <section class="description">
     
+<p>creates a class to create the games table</p>
+
   </section>
 
   
@@ -128,15 +130,20 @@
 
           
           <div class="method-source-code" id="change-source">
-            <pre><span class="ruby-comment"># File db/migrate/20140509090712_create_games.rb, line 2</span>
+            <pre><span class="ruby-comment"># File db/migrate/20140509090712_create_games.rb, line 3</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">change</span>
+  <span class="ruby-comment"># create a table for games</span>
   <span class="ruby-identifier">create_table</span> <span class="ruby-value">:games</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+    <span class="ruby-comment"># id for the game</span>
     <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:gameid</span>
+    <span class="ruby-comment"># the username for user1</span>
     <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:user1</span>
+    <span class="ruby-comment"># the amount of correct questions answered by user1</span>
     <span class="ruby-identifier">t</span>.<span class="ruby-identifier">integer</span> <span class="ruby-value">:user1progress</span>
+     <span class="ruby-comment"># the username for user2</span>
     <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:user2</span>
+    <span class="ruby-comment"># the amount of correct questions answered by user2</span>
     <span class="ruby-identifier">t</span>.<span class="ruby-identifier">integer</span> <span class="ruby-value">:user2progress</span>
-
     <span class="ruby-identifier">t</span>.<span class="ruby-identifier">timestamps</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>

@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class User - RDoc Documentation</title>
+<title>class UserWins - RDoc Documentation</title>
 
 <link href="./fonts.css" rel="stylesheet">
 <link href="./rdoc.css" rel="stylesheet">
@@ -61,7 +61,7 @@
   <h3>Parent</h3>
 
   
-  <p class="link">ActiveRecord::Base
+  <p class="link">ActiveRecord::Migration
   
 </div>
 
@@ -73,7 +73,7 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-c-authenticate">::authenticate</a>
+    <li ><a href="#method-i-change">#change</a>
     
   </ul>
 </div>
@@ -81,16 +81,13 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-User">
-  <h1 id="class-User" class="class">
-    class User
+<main role="main" aria-labelledby="class-UserWins">
+  <h1 id="class-UserWins" class="class">
+    class UserWins
   </h1>
 
   <section class="description">
     
-<p>Class defines a user, validates username, email, password and the length of
-password is between 6 t0 20 digits</p>
-
   </section>
 
   
@@ -106,17 +103,17 @@ password is between 6 t0 20 digits</p>
     
 
     
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
-         <h3>Public Class Methods</h3>
+         <h3>Public Instance Methods</h3>
        </header>
 
     
-      <div id="method-c-authenticate" class="method-detail ">
+      <div id="method-i-change" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">authenticate</span><span
-            class="method-args">(login_username="", login_password="")</span>
+          <span class="method-name">change</span><span
+            class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -125,26 +122,14 @@ password is between 6 t0 20 digits</p>
 
         <div class="method-description">
           
-          <p>Authenticate a users log in attempt by comparing their username and
-password against the database</p>
+          
           
           
 
           
-          <div class="method-source-code" id="authenticate-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 13</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">authenticate</span>(<span class="ruby-identifier">login_username</span>=<span class="ruby-string">&quot;&quot;</span>, <span class="ruby-identifier">login_password</span>=<span class="ruby-string">&quot;&quot;</span>)
-        <span class="ruby-comment"># Grab the user</span>
-        <span class="ruby-identifier">user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_username</span>(<span class="ruby-identifier">login_username</span>)
-        <span class="ruby-comment"># If the user exists and passwords match</span>
-        <span class="ruby-keyword">if</span> <span class="ruby-identifier">user</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">password</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">login_password</span>
-                <span class="ruby-comment"># Return that user</span>
-                <span class="ruby-keyword">return</span> <span class="ruby-identifier">user</span>
-        <span class="ruby-comment"># Else</span>
-        <span class="ruby-keyword">else</span> 
-                <span class="ruby-comment"># Return false to invalidate the login</span>
-                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
-        <span class="ruby-keyword">end</span>
+          <div class="method-source-code" id="change-source">
+            <pre><span class="ruby-comment"># File db/migrate/20140516005837_user_wins.rb, line 2</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">change</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

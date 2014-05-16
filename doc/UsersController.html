@@ -104,6 +104,11 @@
 
   <section class="description">
     
+<p>Copyright: Redhat Author : Jarred Green All Rights Reserved.</p>
+
+<p>Create a class UserController that parses http requests and calls the
+methods in this class</p>
+
   </section>
 
   
@@ -144,9 +149,10 @@
 
           
           <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 28</span>
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 35</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
   <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">user_params</span>)
+      <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">wins</span> = <span class="ruby-value">0</span>
 
   <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">save</span>
@@ -188,10 +194,10 @@
 
           
           <div class="method-source-code" id="destroy-source">
-            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 60</span>
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 68</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
   <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">destroy</span>
-  <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>] = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>] = <span class="ruby-keyword">nil</span> <span class="ruby-comment"># Set the user_id session variable to nil</span>
   <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">flash</span>[<span class="ruby-value">:valid</span>] = <span class="ruby-string">'User was successfully destroyed.'</span>
     <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">pages_url</span> }
@@ -227,7 +233,7 @@
 
           
           <div class="method-source-code" id="edit-source">
-            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 23</span>
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 30</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">edit</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -259,7 +265,7 @@
 
           
           <div class="method-source-code" id="index-source">
-            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 8</span>
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
   <span class="ruby-ivar">@users</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">all</span>
 <span class="ruby-keyword">end</span></pre>
@@ -286,21 +292,28 @@
 
         <div class="method-description">
           
-          
+          <p>Authenticates a user that attempts to login</p>
           
           
 
           
           <div class="method-source-code" id="login_attempt-source">
-            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 70</span>
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 79</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">login_attempt</span>
+  <span class="ruby-comment"># Authenticates a user with the posted parameters and stores the user if they exist, otherwise stores nil   </span>
   <span class="ruby-identifier">authorized_user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">authenticate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:login_username</span>],<span class="ruby-identifier">params</span>[<span class="ruby-value">:login_password</span>])
+  <span class="ruby-comment"># If the user exists in the database</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">authorized_user</span>
+      <span class="ruby-comment"># Display logged in message</span>
     <span class="ruby-identifier">flash</span>[<span class="ruby-value">:valid</span>] = <span class="ruby-string">&quot;Logged in.&quot;</span>
+    <span class="ruby-comment"># Store user id in a session variable</span>
     <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>] = <span class="ruby-identifier">authorized_user</span>.<span class="ruby-identifier">id</span>
+    <span class="ruby-comment"># Redirect to home page</span>
     <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">pages_url</span>
-  <span class="ruby-keyword">else</span>
+  <span class="ruby-keyword">else</span> <span class="ruby-comment"># Else the user doesn't exist</span>
+      <span class="ruby-comment"># Display error message</span>
     <span class="ruby-identifier">flash</span>[<span class="ruby-value">:invalid</span>] = <span class="ruby-string">&quot;Invalid Username or Password&quot;</span>
+    <span class="ruby-comment"># Reload the page</span>
     <span class="ruby-identifier">render</span> <span class="ruby-string">&quot;login&quot;</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -327,13 +340,14 @@
 
         <div class="method-description">
           
-          
+          <p>Sets the session variables for user and game to nil, then redirects to the
+home page</p>
           
           
 
           
           <div class="method-source-code" id="logout-source">
-            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 82</span>
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 99</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">logout</span>
   <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>] = <span class="ruby-keyword">nil</span>
       <span class="ruby-identifier">session</span>[<span class="ruby-value">:game_id</span>] = <span class="ruby-keyword">nil</span>
@@ -368,7 +382,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 18</span>
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 25</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">new</span>
   <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span>
 <span class="ruby-keyword">end</span></pre>
@@ -401,7 +415,7 @@
 
           
           <div class="method-source-code" id="show-source">
-            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 14</span>
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 21</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -433,7 +447,7 @@
 
           
           <div class="method-source-code" id="update-source">
-            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 45</span>
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 53</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>
   <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">user_params</span>)

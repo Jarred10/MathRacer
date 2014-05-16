@@ -108,6 +108,11 @@
 
   <section class="description">
     
+<p>Copyright: Redhat Author : Jarred Green All Rights Reserved.</p>
+
+<p>Create a class <a href="GamesController.html">GamesController</a> that
+parses http requests and calls the methods in this class</p>
+
   </section>
 
   
@@ -142,13 +147,14 @@
 
         <div class="method-description">
           
-          <p>POST /games POST /games.json</p>
+          <p>POST /games POST /games.json Create a new game passing the game parameter,
+assigning a username to a user1 and keep track of the users progress</p>
           
           
 
           
           <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 31</span>
+            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 38</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
   <span class="ruby-ivar">@game</span> = <span class="ruby-constant">Game</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">game_params</span>)
       <span class="ruby-ivar">@game</span>.<span class="ruby-identifier">user1</span> = <span class="ruby-ivar">@current_user</span>.<span class="ruby-identifier">username</span>
@@ -156,6 +162,7 @@
       <span class="ruby-ivar">@game</span>.<span class="ruby-identifier">user1progress</span> = <span class="ruby-value">0</span>
       <span class="ruby-ivar">@game</span>.<span class="ruby-identifier">user2progress</span> = <span class="ruby-value">0</span>
 
+  <span class="ruby-comment"># Check if game has been saved then assign the game id to the session id    </span>
   <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-ivar">@game</span>.<span class="ruby-identifier">save</span>
               <span class="ruby-identifier">session</span>[<span class="ruby-value">:game_id</span>] = <span class="ruby-ivar">@game</span>.<span class="ruby-identifier">id</span>
@@ -197,7 +204,7 @@
 
           
           <div class="method-source-code" id="destroy-source">
-            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 67</span>
+            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 75</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
   <span class="ruby-ivar">@game</span>.<span class="ruby-identifier">destroy</span>
   <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
@@ -234,7 +241,7 @@
 
           
           <div class="method-source-code" id="edit-source">
-            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 26</span>
+            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 32</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">edit</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -260,13 +267,13 @@
 
         <div class="method-description">
           
-          
+          <p>This method generate random questions from number 0 to 9</p>
           
           
 
           
           <div class="method-source-code" id="generateQuestion-source">
-            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 99</span>
+            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 110</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">generateQuestion</span>
 <span class="ruby-ivar">@f</span> = <span class="ruby-identifier">rand</span>(<span class="ruby-value">10</span>)
 <span class="ruby-ivar">@s</span> = <span class="ruby-identifier">rand</span>(<span class="ruby-value">10</span>)
@@ -300,7 +307,7 @@
 
           
           <div class="method-source-code" id="index-source">
-            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 11</span>
+            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 17</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
   <span class="ruby-ivar">@opengames</span> = <span class="ruby-constant">Game</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:user2</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -327,13 +334,14 @@
 
         <div class="method-description">
           
-          
+          <p>This method when the user join a game, check is it user1 or user2. If no
+user then assign each user id to a session</p>
           
           
 
           
           <div class="method-source-code" id="join-source">
-            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 75</span>
+            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 85</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">join</span>
       <span class="ruby-keyword">if</span>(<span class="ruby-ivar">@game</span>.<span class="ruby-identifier">user1</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span>)
   <span class="ruby-identifier">session</span>[<span class="ruby-value">:game_id</span>] = <span class="ruby-ivar">@game</span>.<span class="ruby-identifier">id</span>
@@ -347,9 +355,9 @@
   <span class="ruby-ivar">@game</span>.<span class="ruby-identifier">save</span>
   <span class="ruby-ivar">@current_game</span> = <span class="ruby-ivar">@game</span>
       <span class="ruby-keyword">else</span>
-      <span class="ruby-identifier">flash</span>[<span class="ruby-value">:invalid</span>] = <span class="ruby-string">'Game full!'</span>
+      <span class="ruby-identifier">flash</span>[<span class="ruby-value">:invalid</span>] = <span class="ruby-string">'Game full!'</span>         <span class="ruby-comment"># Display an error message if the game is full (more than 2 users)</span>
       <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">games_url</span>
+  <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">games_url</span>                       <span class="ruby-comment"># Redirect the page to a homepage   </span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -380,7 +388,7 @@
 
           
           <div class="method-source-code" id="leave-source">
-            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 93</span>
+            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 103</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">leave</span>
       <span class="ruby-ivar">@game</span>.<span class="ruby-identifier">destroy</span>
   <span class="ruby-identifier">session</span>[<span class="ruby-value">:game_id</span>] = <span class="ruby-keyword">nil</span>
@@ -415,7 +423,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 21</span>
+            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 27</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">new</span>
   <span class="ruby-ivar">@game</span> = <span class="ruby-constant">Game</span>.<span class="ruby-identifier">new</span>
 <span class="ruby-keyword">end</span></pre>
@@ -448,7 +456,7 @@
 
           
           <div class="method-source-code" id="show-source">
-            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 17</span>
+            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 23</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -474,28 +482,40 @@
 
         <div class="method-description">
           
-          
+          <p>This moethod keep track of the user’s answers when game reach 10 questions.
+Display message to the user if they have won the game Incrementing number
+of times the user win, then save the game</p>
           
           
 
           
           <div class="method-source-code" id="submit_answer-source">
-            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 104</span>
+            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 117</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">submit_answer</span>
       <span class="ruby-keyword">if</span>(<span class="ruby-ivar">@current_game</span>.<span class="ruby-identifier">user1progress</span> <span class="ruby-operator">==</span> <span class="ruby-value">10</span>)
       
               <span class="ruby-identifier">flash</span>[<span class="ruby-value">:valid</span>] = <span class="ruby-ivar">@current_game</span>.<span class="ruby-identifier">user1</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; won!&quot;</span>
+              <span class="ruby-identifier">user1</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_username</span>(<span class="ruby-ivar">@current_game</span>.<span class="ruby-identifier">user1</span>)
+              <span class="ruby-identifier">user1</span>.<span class="ruby-identifier">wins</span> = <span class="ruby-identifier">user1</span>.<span class="ruby-identifier">wins</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+              <span class="ruby-identifier">user1</span>.<span class="ruby-identifier">save</span>
               <span class="ruby-ivar">@current_game</span>.<span class="ruby-identifier">destroy</span>
       <span class="ruby-keyword">elsif</span> (<span class="ruby-ivar">@current_game</span>.<span class="ruby-identifier">user2progress</span> <span class="ruby-operator">==</span> <span class="ruby-value">10</span>)
       
-              <span class="ruby-identifier">flash</span>[<span class="ruby-value">:valid</span>] = <span class="ruby-ivar">@current_game</span>.<span class="ruby-identifier">user2</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; won!&quot;</span>
+              
+              <span class="ruby-identifier">user2</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_username</span>(<span class="ruby-ivar">@current_game</span>.<span class="ruby-identifier">user2</span>)
+              <span class="ruby-identifier">user2</span>.<span class="ruby-identifier">wins</span> = <span class="ruby-identifier">user2</span>.<span class="ruby-identifier">wins</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+              <span class="ruby-identifier">user2</span>.<span class="ruby-identifier">save</span>
+              
+              <span class="ruby-identifier">flash</span>[<span class="ruby-value">:valid</span>] = <span class="ruby-identifier">user2</span>.<span class="ruby-identifier">username</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; won!&quot;</span>
               <span class="ruby-ivar">@current_game</span>.<span class="ruby-identifier">destroy</span>
-      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:answer</span>].<span class="ruby-identifier">to_f</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:f</span>].<span class="ruby-identifier">to_f</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:s</span>].<span class="ruby-identifier">to_f</span>
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:answer</span>].<span class="ruby-identifier">to_f</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:f</span>].<span class="ruby-identifier">to_f</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:s</span>].<span class="ruby-identifier">to_f</span>                        <span class="ruby-comment"># Multiply two numbers and assign it to answer parameter</span>
               <span class="ruby-keyword">if</span>(<span class="ruby-ivar">@current_user</span>.<span class="ruby-identifier">username</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@current_game</span>.<span class="ruby-identifier">user1</span>)
                       <span class="ruby-ivar">@current_game</span>.<span class="ruby-identifier">user1progress</span> = <span class="ruby-ivar">@current_game</span>.<span class="ruby-identifier">user1progress</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
               <span class="ruby-keyword">else</span>
                       <span class="ruby-ivar">@current_game</span>.<span class="ruby-identifier">user2progress</span> = <span class="ruby-ivar">@current_game</span>.<span class="ruby-identifier">user2progress</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
               <span class="ruby-keyword">end</span>
+              
+              <span class="ruby-comment"># Save the game and display the message to the user</span>
               <span class="ruby-ivar">@current_game</span>.<span class="ruby-identifier">save</span>
               <span class="ruby-identifier">flash</span>[<span class="ruby-value">:valid</span>] = <span class="ruby-string">&quot;Correct Answer!&quot;</span>
       
@@ -505,7 +525,7 @@
       
       <span class="ruby-keyword">end</span>
       
-              <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">games_path</span>
+              <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">games_path</span>                        <span class="ruby-comment"># Redirect the page to the game page</span>
       
       
 
@@ -540,7 +560,7 @@
 
           
           <div class="method-source-code" id="update-source">
-            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 53</span>
+            <pre><span class="ruby-comment"># File app/controllers/games_controller.rb, line 61</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>
   <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-ivar">@game</span>.<span class="ruby-identifier">update</span>
