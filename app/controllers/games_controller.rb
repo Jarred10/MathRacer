@@ -1,4 +1,9 @@
-# This class set the game, authenticate the user, running the game and generate questions  
+# 
+# Copyright: Redhat
+# Author : Jarred Green
+# All Rights Reserved.
+#
+# Create a class GamesController that parses http requests and calls the methods in this class 
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy, :join, :leave]
   before_action :authenticate_user, before: :all
@@ -29,6 +34,7 @@ class GamesController < ApplicationController
 
   # POST /games
   # POST /games.json
+  # Create a new game passing the game parameter, assigning a username to a user1 and keep track of the users progress
   def create
     @game = Game.new(game_params)
 	@game.user1 = @current_user.username
@@ -73,7 +79,9 @@ class GamesController < ApplicationController
       format.json { head :no_content }
     end
   end
- 
+  
+  
+ # This method when the user join a game, check is it user1 or user2. If no user then assign each user id to a session
   def join
 	if(@game.user1 == nil)
     session[:game_id] = @game.id
@@ -87,9 +95,9 @@ class GamesController < ApplicationController
     @game.save
     @current_game = @game
 	else
-	flash[:invalid] = 'Game full!'
+	flash[:invalid] = 'Game full!'		# Display an error message if the game is full (more than 2 users)
 	end
-    redirect_to games_url
+    redirect_to games_url			# Redirect the page to a homepage	
   end
   
   def leave
@@ -98,11 +106,14 @@ class GamesController < ApplicationController
     redirect_to games_url
   end
   
+  # This method generate random questions from number 0 to 9
   def generateQuestion
   @f = rand(10)
   @s = rand(10)
   end
   
+  # This moethod keep track of the user's answers when game reach 10 questions. Display message to the user if they have won the game
+  # Incrementing number of times the user win, then save the game
   def submit_answer
 	if(@current_game.user1progress == 10)
 	
@@ -120,12 +131,14 @@ class GamesController < ApplicationController
 		
 		flash[:valid] = user2.username + " won!"
 		@current_game.destroy
-	elsif params[:answer].to_f == params[:f].to_f * params[:s].to_f
+	elsif params[:answer].to_f == params[:f].to_f * params[:s].to_f			# Multiply two numbers and assign it to answer parameter
 		if(@current_user.username == @current_game.user1)
 			@current_game.user1progress = @current_game.user1progress + 1
 		else
 			@current_game.user2progress = @current_game.user2progress + 1
 		end
+		
+		# Save the game and display the message to the user
 		@current_game.save
 		flash[:valid] = "Correct Answer!"
 	
@@ -135,7 +148,7 @@ class GamesController < ApplicationController
 	
 	end
 	
-		redirect_to games_path
+		redirect_to games_path			# Redirect the page to the game page
 	
 	
   
