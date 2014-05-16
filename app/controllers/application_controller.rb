@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   
   # Authenticates a users log in
   def authenticate_user
-  	# If the session matches the users id
+  	# If the session exists
   	if session[:user_id]
    		# Set current user object to @current_user object variable
    		@current_user = User.find session[:user_id] 
