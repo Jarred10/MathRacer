@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_filter :logged_out, :only => [:new, :create]
   before_filter :authenticate_user, only: [:edit, :update, :destroy]
-  # logout is accessible from all pages	
+  # Logout is accessible from all pages	
   helper_method :logout
   
   def index
@@ -75,27 +75,27 @@ class UsersController < ApplicationController
     end
   end
 
-  # authenticates a user that attempts to login
+  # Authenticates a user that attempts to login
   def login_attempt
     # authenticates a user with the posted parameters and stores the user if they exist, otherwise stores nil	
     authorized_user = User.authenticate(params[:login_username],params[:login_password])
-    # if the user exists in the database
+    # If the user exists in the database
     if authorized_user
-    	# display logged in message
+    	# Display logged in message
       flash[:valid] = "Logged in."
-      # store user id in a session variable
+      # Store user id in a session variable
       session[:user_id] = authorized_user.id
-      # redirect to home page
+      # Redirect to home page
       redirect_to pages_url
-    else # else the user doesn't exist
-    	# display error message
+    else # Else the user doesn't exist
+    	# Display error message
       flash[:invalid] = "Invalid Username or Password"
-      # reload the page
+      # Reload the page
       render "login"
     end
   end
 
-  # sets the session variables for user and game to nil, then redirects to the home page	
+  # Sets the session variables for user and game to nil, then redirects to the home page	
   def logout
     session[:user_id] = nil
 	session[:game_id] = nil
