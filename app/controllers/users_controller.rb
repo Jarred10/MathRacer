@@ -75,14 +75,22 @@ class UsersController < ApplicationController
     end
   end
 
+  # authenticates a user that attempts to login
   def login_attempt
+    # authenticates a user with the posted parameters and stores the user if they exist, otherwise stores nil	
     authorized_user = User.authenticate(params[:login_username],params[:login_password])
+    # if the user exists in the database
     if authorized_user
+    	# display logged in message
       flash[:valid] = "Logged in."
+      # store user id in a session variable
       session[:user_id] = authorized_user.id
+      # redirect to home page
       redirect_to pages_url
-    else
+    else # else the user doesn't exist
+    	# display error message
       flash[:invalid] = "Invalid Username or Password"
+      # reload the page
       render "login"
     end
   end
