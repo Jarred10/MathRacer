@@ -1,4 +1,4 @@
-# Class defines a user 
+# Class defines a user, validates username, email, password and the length of password is between 6 t0 20 digits
 class User < ActiveRecord::Base
 	validates :username, :presence => true, :uniqueness => true
 	validates :email, :presence => true, :uniqueness => true;
