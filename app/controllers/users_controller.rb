@@ -1,4 +1,11 @@
+# 
+# copyright: Redhat
+# Author : Jarred Green
+# All Rights Reserved.
+#
+# Create a class UserController that parses http requests and calls the methods in this class
 class UsersController < ApplicationController
+ # Before doing th
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_filter :logged_out, :only => [:new, :create]
   before_filter :authenticate_user, only: [:edit, :update, :destroy]
