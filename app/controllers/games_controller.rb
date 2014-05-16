@@ -1,10 +1,11 @@
+# This class set the game, authenticate the user, running the game and generate questions  
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy, :join, :leave]
   before_action :authenticate_user, before: :all
   before_action :in_game, before: :all
   before_action :generateQuestion, before: :index
 
-  helper_method :submit_answer
+  helper_method :submit_answer			# This method submit the user's answers
   
   # GET /games
   # GET /games.json
@@ -35,6 +36,7 @@ class GamesController < ApplicationController
 	@game.user1progress = 0
 	@game.user2progress = 0
 
+    # Check if game has been saved then assign the game id to the session id	
     respond_to do |format|
       if @game.save
 		session[:game_id] = @game.id
