@@ -5,11 +5,11 @@
 #
 # Create a class UserController that parses http requests and calls the methods in this class
 class UsersController < ApplicationController
- # Before doing th
+ # Before the specified methods, call the set user function
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_filter :logged_out, :only => [:new, :create]
   before_filter :authenticate_user, only: [:edit, :update, :destroy]
-
+  # logout is accessible from all pages	
   helper_method :logout
   
   def index
@@ -67,7 +67,7 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user.destroy
-    session[:user_id] = nil
+    session[:user_id] = nil # set the user_id session variable to nil
     respond_to do |format|
       flash[:valid] = 'User was successfully destroyed.'
       format.html { redirect_to pages_url }
@@ -87,6 +87,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # sets the session variables for user and game to nil, then redirects to the home page	
   def logout
     session[:user_id] = nil
 	session[:game_id] = nil
