@@ -58,6 +58,7 @@ class GamesController < ApplicationController
 
   # PATCH/PUT /games/1
   # PATCH/PUT /games/1.json
+  # Update game and display the message to the user
   def update
     respond_to do |format|
       if @game.update
@@ -72,6 +73,7 @@ class GamesController < ApplicationController
 
   # DELETE /games/1
   # DELETE /games/1.json
+  # Destroy a game and redirect a page to game page and display a message
   def destroy
     @game.destroy
     respond_to do |format|
@@ -97,9 +99,10 @@ class GamesController < ApplicationController
 	else
 	flash[:invalid] = 'Game full!'		# Display an error message if the game is full (more than 2 users)
 	end
-    redirect_to games_url			# Redirect the page to a homepage	
+    redirect_to games_url			# Redirect the page to game page	
   end
   
+  # When the user leave a game set a session to nil and redirect the page to game page
   def leave
 	@game.destroy
     session[:game_id] = nil
