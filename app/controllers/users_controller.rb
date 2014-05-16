@@ -67,7 +67,7 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user.destroy
-    session[:user_id] = nil # set the user_id session variable to nil
+    session[:user_id] = nil # Set the user_id session variable to nil
     respond_to do |format|
       flash[:valid] = 'User was successfully destroyed.'
       format.html { redirect_to pages_url }
