@@ -77,7 +77,7 @@ class UsersController < ApplicationController
 
   # Authenticates a user that attempts to login
   def login_attempt
-    # authenticates a user with the posted parameters and stores the user if they exist, otherwise stores nil	
+    # Authenticates a user with the posted parameters and stores the user if they exist, otherwise stores nil	
     authorized_user = User.authenticate(params[:login_username],params[:login_password])
     # If the user exists in the database
     if authorized_user
