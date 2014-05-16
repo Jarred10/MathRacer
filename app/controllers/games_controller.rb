@@ -105,10 +105,18 @@ class GamesController < ApplicationController
 	if(@current_game.user1progress == 10)
 	
 		flash[:valid] = @current_game.user1 + " won!"
+		user1 = User.find_by_username(@current_game.user1)
+		user1.wins = user1.wins + 1
+		user1.save
 		@current_game.destroy
 	elsif (@current_game.user2progress == 10)
 	
-		flash[:valid] = @current_game.user2 + " won!"
+		
+		user2 = User.find_by_username(@current_game.user2)
+		user2.wins = user2.wins + 1
+		user2.save
+		
+		flash[:valid] = user2.username + " won!"
 		@current_game.destroy
 	elsif params[:answer].to_f == params[:f].to_f * params[:s].to_f
 		if(@current_user.username == @current_game.user1)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140509090712) do
+ActiveRecord::Schema.define(version: 20140516005837) do
 
   create_table "games", force: true do |t|
     t.string   "gameid"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20140509090712) do
     t.string   "username"
     t.string   "password"
     t.string   "email"
+    t.integer  "wins",       default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -27,6 +27,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
+	@user.wins = 0
 
     respond_to do |format|
       if @user.save
@@ -81,6 +82,7 @@ class UsersController < ApplicationController
 
   def logout
     session[:user_id] = nil
+	session[:game_id] = nil
     redirect_to pages_url
   end
 
