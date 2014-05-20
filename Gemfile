@@ -4,10 +4,11 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.1'
-# Use sqlite3 as the database for Active Record
+# Use sqlite3 as the database for Active Record when running on local machine
 group :development, :test do
 	gem 'sqlite3'
 end
+# User postgres db gem when under production (Heroku)
 group :production do
 	gem 'pg'
 	gem 'rails_12factor'
